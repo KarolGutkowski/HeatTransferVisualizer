@@ -18,9 +18,7 @@ Stencil being one of the very popular parallel patterns, was a topic of a Chapte
 which inspired me to use this visualization and apply the suggested optimization to parallel stencil pattern.
 
 
-|![Visualization of heat transfer on 2D plate with two sides being "cold" and two "hot"](https://github.com/KarolGutkowski/HeatTransferVisualizer/assets/90787864/4b650d5d-8ecb-48b2-8f41-3db8b6b1d786)| 
-|:--:| 
-| *Visualization of heat transfer on 2D plate with two sides being "cold" and two "hot"* |
+https://github.com/KarolGutkowski/HeatTransferVisualizer/assets/90787864/4b650d5d-8ecb-48b2-8f41-3db8b6b1d786
 
 
 
