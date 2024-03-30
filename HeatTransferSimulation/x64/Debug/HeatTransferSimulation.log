@@ -1,0 +1,10 @@
+﻿  Compiling CUDA source file gpu_calculation\gpu_calculation.cu...
+  
+  C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\HostX64\x64" -x cu   -IC:\Users\nope1\source\repos\HeatTransferSimulation\Includes -IC:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\include"  -G   --keep-dir x64\Debug  -maxrregcount=0   --machine 64 --compile -cudart static  -g  -DWIN32 -DWIN64 -D_DEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /Od /FS /Zi /RTC1 /MDd " -Xcompiler "/Fdx64\Debug\vc143.pdb" -o C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\x64\Debug\gpu_calculation.cu.obj "C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\gpu_calculation\gpu_calculation.cu" 
+  gpu_calculation.cu
+  tmpxft_00004f70_00000000-7_gpu_calculation.cudafe1.cpp
+  main.cpp
+     Creating library C:\Users\nope1\source\repos\HeatTransferSimulation\x64\Debug\HeatTransferSimulation.lib and object C:\Users\nope1\source\repos\HeatTransferSimulation\x64\Debug\HeatTransferSimulation.exp
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  HeatTransferSimulation.vcxproj -> C:\Users\nope1\source\repos\HeatTransferSimulation\x64\Debug\HeatTransferSimulation.exe
