@@ -5,17 +5,22 @@
 #include "gpu_calculation/gpu_calculation.h"
 #include "cuda_gl_interop.h"
 
-#define WINDOW_HEIGHT 500
-#define WINDOW_WIDTH WINDOW_HEIGHT
+#define WINDOW_HEIGHT 600
+#define WINDOW_WIDTH 600
+
+// this should be multiples of 4, since opengl wants allignment 
+// so f.e. 10 wont work but 8, 12, 32, 100 will
+#define SIMULATION_SIZE 52
+
 
 void run_window_loop(GLFWwindow* window);
 GLuint generatePBO();
-void addDataToPBO(uchar3* data, GLuint pbo);
+void addDataToPBO(uchar3* data, GLuint pbo, size_t size);
 uchar3* allocateCPUGrid();
 void loadGlad();
 GLuint generateTexture();
 float* generate_starting_temperature_data(int w, int h);
-void draw_texture();
+void draw_texture(GLuint tex, int w, int h);
 
 int main(void)
 {
@@ -30,12 +35,12 @@ int main(void)
 
 void run_window_loop(GLFWwindow* window)
 {
-    auto temperature_data = generate_starting_temperature_data(WINDOW_WIDTH, WINDOW_HEIGHT);
+    auto temperature_data = generate_starting_temperature_data(SIMULATION_SIZE, SIMULATION_SIZE);
 
     float alpha = 2000;
     float delta_x, delta_y;
 
-    delta_x = delta_y = 0.05f/ WINDOW_WIDTH;
+    delta_x = delta_y = 0.05f/ SIMULATION_SIZE;
 
     float delta_t = (delta_x * delta_x)/ (4*alpha);
     auto pbo = generatePBO();
@@ -43,7 +48,7 @@ void run_window_loop(GLFWwindow* window)
 
     auto tex = generateTexture();
 
-    addDataToPBO(cpu_grid, pbo);
+    addDataToPBO(cpu_grid, pbo, 3* sizeof(char)* SIMULATION_SIZE * SIMULATION_SIZE);
 
     cudaGraphicsResource* cuda_pbo;
     cudaGraphicsGLRegisterBuffer(&cuda_pbo, pbo, cudaGraphicsRegisterFlagsWriteDiscard);
@@ -57,11 +62,11 @@ void run_window_loop(GLFWwindow* window)
         cudaGraphicsResourceGetMappedPointer((void**)&pixels, NULL, cuda_pbo);
 
         calculate_heat_equation_at_time(delta_t, delta_x, delta_y, alpha, 
-            pixels, temperature_data, WINDOW_WIDTH, WINDOW_HEIGHT);
+            pixels, temperature_data, SIMULATION_SIZE, SIMULATION_SIZE);
 
         cudaGraphicsUnmapResources(1, &cuda_pbo, 0);
 
-        draw_texture();
+        draw_texture(tex, SIMULATION_SIZE, SIMULATION_SIZE);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -79,10 +84,10 @@ GLuint generatePBO()
     return pbo;
 }
 
-void addDataToPBO(uchar3* data, GLuint pbo)
+void addDataToPBO(uchar3* data, GLuint pbo, size_t size)
 {
     glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo);
-    glBufferData(GL_PIXEL_UNPACK_BUFFER, 3 * WINDOW_WIDTH * WINDOW_HEIGHT * sizeof(char), data, GL_STREAM_DRAW);
+    glBufferData(GL_PIXEL_UNPACK_BUFFER, size, data, GL_STREAM_DRAW);
 }
 
 void loadGlad()
@@ -94,10 +99,12 @@ void loadGlad()
     }
 }
 
-void draw_texture()
+void draw_texture(GLuint tex, int w , int h)
 {
+    glBindTexture(GL_TEXTURE_2D, tex);
+
     glClear(GL_COLOR_BUFFER_BIT);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glEnable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0, -1.0);
@@ -110,7 +117,7 @@ void draw_texture()
 
 uchar3* allocateCPUGrid()
 {
-    uchar3* cpu_grid = (uchar3*)malloc(sizeof(uchar3) * WINDOW_WIDTH * WINDOW_HEIGHT);
+    uchar3* cpu_grid = (uchar3*)malloc(sizeof(uchar3) * SIMULATION_SIZE * SIMULATION_SIZE);
 
     if (!cpu_grid)
     {
@@ -118,7 +125,7 @@ uchar3* allocateCPUGrid()
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < WINDOW_WIDTH * WINDOW_HEIGHT; i++)
+    for (int i = 0; i < SIMULATION_SIZE * SIMULATION_SIZE; i++)
     {
         cpu_grid[i].x = 0;
         cpu_grid[i].y = 0;
