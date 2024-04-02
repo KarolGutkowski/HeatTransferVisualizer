@@ -66,6 +66,8 @@ void run_window_loop(GLFWwindow* window)
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+
+    free(temperature_data);
 }
 
 
@@ -99,9 +101,9 @@ void draw_texture()
     glEnable(GL_TEXTURE_2D);
     glBegin(GL_QUADS);
     glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0, -1.0);
-    glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0, 1.0);
+    glTexCoord2f(0.0f, 1.0f); glVertex2f(1.0, -1.0);
     glTexCoord2f(1.0f, 1.0f); glVertex2f(1.0, 1.0);
-    glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0, -1.0);
+    glTexCoord2f(1.0f, 0.0f); glVertex2f(-1.0, 1.0);
     glEnd();
     glDisable(GL_TEXTURE_2D);
 }
@@ -151,32 +153,13 @@ float* generate_starting_temperature_data(int w, int h)
 
     for (int i = 0; i < w * h; i++)
     {
-        if (i < w /*|| i >(w * (h - 1))*/)
+        if (i < w)
             temps[i] = hotTemp;
-        /*else if (i % w == 0)
-            temps[i] = hotTemp;*/
         else if (i % w == w - 1)
             temps[i] = hotTemp;
-       /* else if(i % w > (500- 50 )/2 && 
-            i % w < (500 - 50) / 2 + 50 &&
-            i / w >(500 - 50) / 2 &&
-            i / w < (500 - 50) / 2 + 50
-            ) 
-            temps[i] = hotTemp;*/
         else 
             temps[i] = 0.0f;
     }
-
-    // set first row to 100 degress
-    /*for (int i = 0; i < w; i++)
-    {
-        temps[i] = 100.0f;
-    }
-
-    for (int i = 0; i < w; i++)
-    {
-        temps[w * h - i- 1] = 100.0f;
-    }*/
 
     return temps;
 }

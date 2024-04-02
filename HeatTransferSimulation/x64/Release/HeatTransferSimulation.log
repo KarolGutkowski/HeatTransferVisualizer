@@ -1,0 +1,18 @@
+﻿  Compiling CUDA source file gpu_calculation\gpu_calculation.cu...
+  
+  C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\bin\nvcc.exe" -gencode=arch=compute_52,code=\"sm_52,compute_52\" --use-local-env -ccbin "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\bin\HostX64\x64" -x cu   -IC:\Users\nope1\source\repos\HeatTransferSimulation\Includes -IC:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\ -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.2\include"     --keep-dir x64\Release  -maxrregcount=0   --machine 64 --compile -cudart static    -DWIN32 -DWIN64 -DNDEBUG -D_CONSOLE -D_MBCS -Xcompiler "/EHsc /W3 /nologo /O2 /FS   /MD " -Xcompiler "/Fdx64\Release\vc143.pdb" -o C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\x64\Release\gpu_calculation.cu.obj "C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\gpu_calculation\gpu_calculation.cu" 
+C:\Users\nope1\source\repos\HeatTransferSimulation\HeatTransferSimulation\gpu_calculation\gpu_calculation.cu(25): warning #550-D: variable "temps_s" was set but never used
+    	__declspec(__shared__) float temps_s[8][8];
+    	                             ^
+  
+  Remark: The warnings can be suppressed with "-diag-suppress <warning-number>"
+  
+  gpu_calculation.cu
+  tmpxft_00004518_00000000-7_gpu_calculation.cudafe1.cpp
+     Creating library C:\Users\nope1\source\repos\HeatTransferSimulation\x64\Release\HeatTransferSimulation.lib and object C:\Users\nope1\source\repos\HeatTransferSimulation\x64\Release\HeatTransferSimulation.exp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 46 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  HeatTransferSimulation.vcxproj -> C:\Users\nope1\source\repos\HeatTransferSimulation\x64\Release\HeatTransferSimulation.exe
