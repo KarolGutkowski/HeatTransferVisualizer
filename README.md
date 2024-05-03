@@ -14,8 +14,8 @@ This formula can be rewritten to calculate T(x,y,t) based on the temperature at 
 
 The blue dot signifies T(x,y,t), whereas the red dots signify values of T at the previous time stamp on which T at the current time step depends.
 
-Stencil being one of the very popular parallel patterns, was a topic of a Chapter 8 of the book "Programming Massively Parallel Processors" by David Kirk and Wen-mei Hwu 
-which inspired me to use this visualization and apply the suggested optimization to parallel stencil pattern.
+Stencil being one of the very popular parallel patterns, was a topic of Chapter 8 in "Programming Massively Parallel Processors" by David Kirk and Wen-mei Hwu 
+which inspired me to use this visualization and apply the suggested optimization to parallel stencil.
 
 
 https://github.com/KarolGutkowski/HeatTransferVisualizer/assets/90787864/4b650d5d-8ecb-48b2-8f41-3db8b6b1d786
